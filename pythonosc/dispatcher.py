@@ -50,7 +50,8 @@ class Dispatcher(object):
     for addr, handlers in self._map.items():
       if (pattern.match(addr)
         or (('*' in addr) and re.match(addr.replace('*','[^/]*?/*'), address_pattern))):
-        yield from handlers
+        for handler in handlers:
+            yield handler
         matched = True
 
     if not matched and self._default_handler:

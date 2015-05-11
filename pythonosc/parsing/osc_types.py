@@ -41,6 +41,13 @@ def write_string(val):
   return dgram
 
 
+def toint(x):
+    try:
+        return ord(x)
+    except TypeError:
+        return x
+
+
 def get_string(dgram, start_index):
   """Get a python string from the datagram, starting at pos start_index.
 
@@ -61,7 +68,7 @@ def get_string(dgram, start_index):
   """
   offset = 0
   try:
-    while dgram[start_index + offset] != 0:
+    while toint(dgram[start_index + offset]) != 0:
       offset += 1
     if offset == 0:
       raise ParseError(

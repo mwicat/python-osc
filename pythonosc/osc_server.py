@@ -21,7 +21,12 @@ http://docs.python.org/library/socketserver.html
 """
 
 import calendar
-import socketserver
+
+try:
+    import socketserver
+except ImportError:
+    import SocketServer as socketserver
+
 import time
 
 from pythonosc import osc_bundle

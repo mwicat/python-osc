@@ -6,7 +6,7 @@ from pythonosc import dispatcher
 class TestDispatcher(unittest.TestCase):
 
   def setUp(self):
-    super().setUp()
+    super(TestDispatcher, self).setUp()
     self.dispatcher = dispatcher.Dispatcher()
 
   def sortAndAssertSequenceEqual(self, expected, result):

@@ -1,5 +1,9 @@
 import unittest
-import unittest.mock
+
+try:
+    import unittest.mock as mock
+except ImportError:
+    import mock
 
 from pythonosc import dispatcher
 from pythonosc import osc_server
@@ -30,31 +34,31 @@ class TestOscServer(unittest.TestCase):
 class TestUDPHandler(unittest.TestCase):
 
   def setUp(self):
-    super().setUp()
+    super(TestUDPHandler, self).setUp()
     self.dispatcher = dispatcher.Dispatcher()
     # We do not want to create real UDP connections during unit tests.
-    self.server = unittest.mock.Mock(spec=osc_server.BlockingOSCUDPServer)
+    self.server = mock.Mock(spec=osc_server.BlockingOSCUDPServer)
     # Need to attach property mocks to types, not objects... weird.
-    type(self.server).dispatcher = unittest.mock.PropertyMock(
+    type(self.server).dispatcher = mock.PropertyMock(
         return_value=self.dispatcher)
     self.client_address = ("127.0.0.1", 8080)
 
   def test_no_match(self):
-    mock_meth = unittest.mock.MagicMock()
+    mock_meth = mock.MagicMock()
     self.dispatcher.map("/foobar", mock_meth)
     osc_server._UDPHandler(
         [_SIMPLE_PARAM_INT_MSG, None], self.client_address, self.server)
     self.assertFalse(mock_meth.called)
 
   def test_match_with_args(self):
-    mock_meth = unittest.mock.MagicMock()
+    mock_meth = mock.MagicMock()
     self.dispatcher.map("/SYNC", mock_meth, 1, 2, 3)
     osc_server._UDPHandler(
         [_SIMPLE_PARAM_INT_MSG, None], self.client_address, self.server)
     mock_meth.assert_called_with("/SYNC", [1, 2, 3], 4)
 
   def test_match_int9(self):
-    mock_meth = unittest.mock.MagicMock()
+    mock_meth = mock.MagicMock()
     self.dispatcher.map("/debug", mock_meth)
     osc_server._UDPHandler(
         [_SIMPLE_PARAM_INT_9, None], self.client_address, self.server)
@@ -62,14 +66,14 @@ class TestUDPHandler(unittest.TestCase):
     mock_meth.assert_called_with("/debug", 9)
 
   def test_match_without_args(self):
-    mock_meth = unittest.mock.MagicMock()
+    mock_meth = mock.MagicMock()
     self.dispatcher.map("/SYNC", mock_meth)
     osc_server._UDPHandler(
         [_SIMPLE_MSG_NO_PARAMS, None], self.client_address, self.server)
     mock_meth.assert_called_with("/SYNC")
 
   def test_match_default_handler(self):
-    mock_meth = unittest.mock.MagicMock()
+    mock_meth = mock.MagicMock()
     self.dispatcher.set_default_handler(mock_meth)
     osc_server._UDPHandler(
         [_SIMPLE_MSG_NO_PARAMS, None], self.client_address, self.server)
