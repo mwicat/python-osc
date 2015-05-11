@@ -11,14 +11,14 @@ except ImportError:
 
 
 setup(
-    name='python-osc',
+    name='python2-osc',
     version='1.4.2',
-    author='attwad',
-    author_email='tmusoft@gmail.com',
+    author='mwicat',
+    author_email='mwicat@gmail.com',
     description=(
         'Open Sound Control server and client implementations in pure Python'),
     long_description=open('README.rst').read(),
-    url='https://github.com/attwad/python-osc',
+    url='https://github.com/mwicat/python2-osc',
     platforms='any',
     packages=[
         'pythonosc',
@@ -29,7 +29,7 @@ setup(
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
-        'Programming Language :: Python :: 3',
+        'Programming Language :: Python',
         'Topic :: Multimedia :: Sound/Audio',
         'Topic :: System :: Networking',
     ],
