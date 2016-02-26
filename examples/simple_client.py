@@ -3,7 +3,7 @@
 
 """Small example OSC client
 
-This program sends 10 random values between 0.0 and 1.0 to the /filter
+This program sends 10 random values between 0.0 and 1.0 to the /debug
 address, waiting for 1 seconds between each value.
 """
 import argparse
@@ -27,7 +27,7 @@ if __name__ == "__main__":
     client = udp_client.UDPClient(args.ip, args.port)
 
     for x in range(10):
-        msg = osc_message_builder.OscMessageBuilder(address="/filter")
+        msg = osc_message_builder.OscMessageBuilder(address="/debug")
         msg.add_arg(random.random())
         msg = msg.build()
         client.send(msg)
