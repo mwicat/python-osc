@@ -55,8 +55,9 @@ class ReaktorDisplay(multiprocessing.Process):
                 # Draw a button-like square for on/off display.
                 pygame.draw.rect(screen, _WHITE, [10, 200, 50, 50], 2)
                 pygame.draw.rect(screen, _WHITE,
-                                 [10, 200, 50,
-                                  50 if self._parameters['blocks'] >= 0.5 else 0])
+                                 [10, 200, 50, 50
+                                  if self._parameters['blocks'] >= 0.5
+                                  else 0])
 
                 # Show actual values.
                 for index, [key, val] in enumerate(self._parameters.items()):
@@ -100,7 +101,8 @@ if __name__ == "__main__":
     reaktor = ReaktorDisplay(bq)
 
     def put_in_queue(args, value):
-        """Put a named argument in the queue to be able to use a single queue."""
+        """Put a named argument in the queue to be able to use a single
+        queue."""
         bq.put([args[0], value])
 
     dispatcher = dispatcher.Dispatcher()
